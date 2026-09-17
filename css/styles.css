@@ -49,6 +49,7 @@ body {
   background: var(--bg-deep);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+  color-scheme: dark;
 }
 
 body {
@@ -1100,7 +1101,10 @@ a { color: inherit; }
   padding: 0;
   background: transparent;
   max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 1.5rem);
   color: var(--text);
+  overflow: hidden;
+  color-scheme: dark;
 }
 
 .modal::backdrop {
@@ -1117,6 +1121,10 @@ a { color: inherit; }
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow), 0 0 0 1px rgba(45, 212, 191, 0.06);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 1.5rem);
+  color-scheme: dark;
 }
 
 .modal-card-lg {
@@ -1130,6 +1138,7 @@ a { color: inherit; }
   padding: 1.05rem 1.2rem;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
+  flex-shrink: 0;
 }
 
 .modal-head h2 {
@@ -1149,38 +1158,69 @@ a { color: inherit; }
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  min-height: 0;
 }
 
 .task-modal-body {
   gap: 1.05rem;
-  max-height: min(70vh, 640px);
-  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow-x: hidden;
+  overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge legacy */
-}
-
-.task-modal-body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  display: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .project-picker {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  max-height: 220px;
-  overflow: auto;
+  max-height: none;
+  overflow: visible;
   padding: 2px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
+/* اسکرول نازک و هم‌رنگ مودال (مخفی‌نما) */
+.modal,
+.modal-card,
+.task-modal-body,
+.project-picker {
+  scrollbar-width: thin;
+  scrollbar-color: #1a2438 #121a2b;
+}
+
+.modal::-webkit-scrollbar,
+.modal-card::-webkit-scrollbar,
+.task-modal-body::-webkit-scrollbar,
 .project-picker::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  width: 3px;
+  height: 3px;
+}
+
+.modal::-webkit-scrollbar-track,
+.modal-card::-webkit-scrollbar-track,
+.task-modal-body::-webkit-scrollbar-track,
+.project-picker::-webkit-scrollbar-track {
+  background: #121a2b;
+}
+
+.modal::-webkit-scrollbar-thumb,
+.modal-card::-webkit-scrollbar-thumb,
+.task-modal-body::-webkit-scrollbar-thumb,
+.project-picker::-webkit-scrollbar-thumb {
+  background: #243044;
+  border-radius: 99px;
+}
+
+.modal::-webkit-scrollbar-button,
+.modal-card::-webkit-scrollbar-button,
+.task-modal-body::-webkit-scrollbar-button,
+.project-picker::-webkit-scrollbar-button {
   display: none;
+  height: 0;
+  width: 0;
 }
 
 .task-summary {
@@ -1432,6 +1472,7 @@ a { color: inherit; }
   padding: 0.95rem 1.2rem 1.15rem;
   border-top: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
 }
 
 .spacer { flex: 1; }
