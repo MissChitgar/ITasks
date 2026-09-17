@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ماتریس زمان و وظایف | iTask</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="10" height="10" rx="2" fill="currentColor" opacity=".9"/><rect x="18" y="4" width="10" height="10" rx="2" fill="currentColor" opacity=".55"/><rect x="4" y="18" width="10" height="10" rx="2" fill="currentColor" opacity=".55"/><rect x="18" y="18" width="10" height="10" rx="2" fill="currentColor" opacity=".3"/></svg>
+        </div>
+        <div>
+          <strong class="brand-title">iTask</strong>
+          <span class="brand-sub">ماتریس زمان و وظایف</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="منوی اصلی">
+        <button class="nav-item active" data-view="matrix">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span>ماتریس زمانی</span>
+        </button>
+        <button class="nav-item" data-view="projects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.5"/></svg>
+          <span>پروژه‌ها</span>
+        </button>
+        <button class="nav-item" data-view="analytics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16"/><rect x="7" y="10" width="3" height="6" rx=".5"/><rect x="12" y="7" width="3" height="9" rx=".5"/><rect x="17" y="12" width="3" height="4" rx=".5"/></svg>
+          <span>گزارش و تحلیل</span>
+        </button>
+        <button class="nav-item" data-view="backup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+          <span>پشتیبان‌گیری</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-stats" id="sidebarStats">
+          <div class="mini-stat"><span>ساعات این ماه</span><strong id="statLogged">0</strong></div>
+          <div class="mini-stat"><span>پروژه فعال</span><strong id="statProjects">0</strong></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="باز کردن منو">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="topbar-title">
+          <h1 id="viewTitle">ماتریس زمانی</h1>
+          <p id="viewSubtitle">انتخاب بازهٔ ساعتی با کشیدن ماوس</p>
+        </div>
+        <div class="topbar-actions" id="topbarActions">
+          <!-- filled per view -->
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- MATRIX VIEW -->
+        <section class="view active" id="view-matrix">
+          <div class="matrix-toolbar">
+            <div class="jalali-nav">
+              <button type="button" class="icon-btn jalali-nav-btn" id="prevMonthBtn" aria-label="ماه قبل" title="ماه قبل">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+              <div class="jalali-selects">
+                <select id="jalaliMonthSelect" class="select" aria-label="ماه"></select>
+                <select id="jalaliYearSelect" class="select" aria-label="سال"></select>
+              </div>
+              <button type="button" class="icon-btn jalali-nav-btn" id="nextMonthBtn" aria-label="ماه بعد" title="ماه بعد">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+              </button>
+              <button type="button" class="btn btn-ghost btn-today" id="btnTodayMonth">ماه جاری</button>
+            </div>
+            <div class="saved-months" id="savedMonths">
+              <div class="saved-months-list" id="savedMonthsList"></div>
+            </div>
+          </div>
+
+          <div class="matrix-wrap" id="matrixWrap">
+            <div class="matrix-scroll" id="matrixScroll">
+              <table class="matrix" id="matrixTable">
+                <thead>
+                  <tr id="matrixHeadRow">
+                    <!-- hours injected -->
+                  </tr>
+                </thead>
+                <tbody id="matrixBody">
+                  <!-- days injected -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="legend" id="projectLegend"></div>
+        </section>
+
+        <!-- PROJECTS VIEW -->
+        <section class="view" id="view-projects">
+          <div class="toolbar">
+            <button type="button" class="btn btn-primary" id="btnNewProject">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              پروژه جدید
+            </button>
+            <div class="filter-tabs" id="projectFilterTabs">
+              <button type="button" class="chip active" data-filter="all">همه</button>
+              <button type="button" class="chip" data-filter="active">فعال</button>
+              <button type="button" class="chip" data-filter="completed">تکمیل‌شده</button>
+            </div>
+          </div>
+          <div class="projects-grid" id="projectsGrid"></div>
+        </section>
+
+        <!-- ANALYTICS VIEW -->
+        <section class="view" id="view-analytics">
+          <div class="kpi-row" id="kpiRow"></div>
+          <div class="analytics-grid">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>پیشرفت پروژه‌ها</h2>
+                <p>مقایسه سهم هدف با ساعات واقعی</p>
+              </div>
+              <div class="progress-list" id="progressList"></div>
+            </div>
+            <div class="panel panel-wide">
+              <div class="panel-head row">
+                <div>
+                  <h2>جدول نظرات</h2>
+                  <p>فیلتر بر اساس پروژه</p>
+                </div>
+                <select id="commentProjectFilter" class="select">
+                  <option value="">همه پروژه‌ها</option>
+                </select>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table" id="commentsTable">
+                  <thead>
+                    <tr>
+                      <th>روز</th>
+                      <th>ساعت</th>
+                      <th>پروژه</th>
+                      <th>نظر</th>
+                      <th>وضعیت</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="toolbar export-bar">
+            <button type="button" class="btn btn-primary" id="btnExportMonth">خروجی اکسل ماه</button>
+            <button type="button" class="btn btn-secondary" id="btnExportProject">خروجی اکسل پروژه</button>
+            <select id="exportProjectSelect" class="select"></select>
+          </div>
+        </section>
+
+        <!-- BACKUP VIEW -->
+        <section class="view" id="view-backup">
+          <div class="backup-cards">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>پشتیبان‌گیری JSON</h2>
+                <p>ذخیره کامل وضعیت برنامه در یک فایل</p>
+              </div>
+              <button type="button" class="btn btn-primary" id="btnBackup">دانلود فایل پشتیبان</button>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <h2>بازیابی</h2>
+                <p>بازگردانی از فایل JSON پشتیبان</p>
+              </div>
+              <label class="btn btn-secondary file-btn">
+                انتخاب فایل و بازیابی
+                <input type="file" id="restoreFile" accept="application/json,.json" hidden />
+              </label>
+            </div>
+            <div class="panel danger-panel">
+              <div class="panel-head">
+                <h2>پاک‌سازی</h2>
+                <p>حذف تمام داده‌های ماه جاری یا کل برنامه</p>
+              </div>
+              <div class="btn-row">
+                <button type="button" class="btn btn-ghost" id="btnClearMonth">پاک کردن ماه جاری</button>
+                <button type="button" class="btn btn-danger" id="btnResetAll">بازنشانی کامل</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Task Modal -->
+  <dialog class="modal" id="taskModal">
+    <form method="dialog" class="modal-card modal-card-lg" id="taskForm">
+      <header class="modal-head">
+        <div>
+          <h2 id="taskModalTitle">ثبت بازه زمانی</h2>
+          <p class="modal-sub" id="taskModalSub">انتخاب پروژه و بازه ساعت</p>
+        </div>
+        <button type="button" class="icon-btn" id="taskModalClose" aria-label="بستن">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </header>
+
+      <div class="modal-body task-modal-body">
+        <div class="task-summary" id="taskSummary">
+          <div class="task-summary-item">
+            <span>تاریخ</span>
+            <strong id="taskSummaryDate">—</strong>
+          </div>
+          <div class="task-summary-item">
+            <span>بازه</span>
+            <strong id="taskSummaryRange">—</strong>
+          </div>
+          <div class="task-summary-item accent">
+            <span>مدت</span>
+            <strong id="durationBadge">۱ ساعت</strong>
+          </div>
+        </div>
+
+        <input type="hidden" id="taskDay" />
+        <input type="hidden" id="taskProject" />
+
+        <section class="task-section">
+          <div class="task-section-head">
+            <h3>بازه ساعت</h3>
+            <div class="hour-presets" id="hourPresets">
+              <button type="button" class="preset-chip" data-span="1">۱ س</button>
+              <button type="button" class="preset-chip" data-span="2">۲ س</button>
+              <button type="button" class="preset-chip" data-span="3">۳ س</button>
+              <button type="button" class="preset-chip" data-span="4">۴ س</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="startHour">ساعت شروع</label>
+              <select id="startHour" class="select"></select>
+            </div>
+            <div class="field">
+              <label for="endHour">ساعت پایان</label>
+              <select id="endHour" class="select"></select>
+            </div>
+          </div>
+          <div class="time-track" id="timeTrack" aria-hidden="true"></div>
+        </section>
+
+        <section class="task-section">
+          <div class="task-section-head">
+            <h3>انتخاب پروژه</h3>
+            <input type="search" id="projectSearch" class="project-search" placeholder="جستجوی پروژه یا مشتری…" autocomplete="off" />
+          </div>
+          <div class="project-picker" id="projectPicker"></div>
+          <p class="project-picker-empty" id="projectPickerEmpty" hidden>پروژه فعالی نیست. از منوی پروژه‌ها یکی بسازید.</p>
+        </section>
+
+        <section class="task-section">
+          <div class="field">
+            <label for="taskComment">توضیح / نظر</label>
+            <textarea id="taskComment" rows="3" placeholder="چه کاری در این بازه انجام شد؟"></textarea>
+          </div>
+          <div class="task-options">
+            <label class="check-card">
+              <input type="checkbox" id="taskDone" />
+              <span class="check-card-ui">
+                <strong>انجام‌شده</strong>
+                <em>این بازه به‌عنوان Done علامت بخورد</em>
+              </span>
+            </label>
+          </div>
+        </section>
+      </div>
+
+      <footer class="modal-foot">
+        <button type="button" class="btn btn-danger" id="btnDeleteRange">حذف کل بازه</button>
+        <div class="spacer"></div>
+        <button type="button" class="btn btn-ghost" id="btnCancelTask">انصراف</button>
+        <button type="submit" class="btn btn-primary" id="btnSaveTask">ذخیره بازه</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Project Modal -->
+  <dialog class="modal" id="projectModal">
+    <form method="dialog" class="modal-card" id="projectForm">
+      <header class="modal-head">
+        <h2 id="projectModalTitle">پروژه جدید</h2>
+        <button type="button" class="icon-btn" id="projectModalClose" aria-label="بستن">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <input type="hidden" id="projectId" />
+        <div class="field">
+          <label for="projectName">نام پروژه</label>
+          <input type="text" id="projectName" required maxlength="80" placeholder="مثلاً طراحی داشبورد" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="projectClient">برچسب مشتری</label>
+            <input type="text" id="projectClient" maxlength="40" placeholder="نام مشتری" />
+          </div>
+          <div class="field">
+            <label for="projectShare">سهم هدف (%)</label>
+            <input type="number" id="projectShare" min="0" max="100" step="1" value="10" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="projectColor">رنگ</label>
+            <input type="color" id="projectColor" value="#6366f1" />
+          </div>
+          <div class="field">
+            <label for="projectStatus">وضعیت</label>
+            <select id="projectStatus" class="select">
+              <option value="active">فعال</option>
+              <option value="completed">تکمیل‌شده (Done)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <footer class="modal-foot">
+        <button type="button" class="btn btn-danger" id="btnDeleteProject" hidden>حذف پروژه</button>
+        <div class="spacer"></div>
+        <button type="button" class="btn btn-ghost" id="btnCancelProject">انصراف</button>
+        <button type="submit" class="btn btn-primary">ذخیره</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Toast -->
+  <div class="toast-host" id="toastHost" aria-live="polite"></div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
