@@ -14,74 +14,78 @@
     <!-- Mobile overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
 
-    <!-- Sidebar -->
+    <!-- Sidebar — slim executive nav -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-brand">
         <div class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="10" height="10" rx="2" fill="currentColor" opacity=".9"/><rect x="18" y="4" width="10" height="10" rx="2" fill="currentColor" opacity=".55"/><rect x="4" y="18" width="10" height="10" rx="2" fill="currentColor" opacity=".55"/><rect x="18" y="18" width="10" height="10" rx="2" fill="currentColor" opacity=".3"/></svg>
         </div>
-        <div>
+        <div class="brand-text">
           <strong class="brand-title">iTask</strong>
           <span class="brand-sub">ماتریس زمان و وظایف</span>
         </div>
       </div>
 
       <nav class="sidebar-nav" aria-label="منوی اصلی">
-        <button class="nav-item active" data-view="matrix">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <button class="nav-item active" data-view="matrix" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
           <span>ماتریس زمانی</span>
         </button>
-        <button class="nav-item" data-view="projects">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.5"/></svg>
+        <button class="nav-item" data-view="projects" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.5"/></svg>
           <span>پروژه‌ها</span>
         </button>
-        <button class="nav-item" data-view="analytics">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16"/><rect x="7" y="10" width="3" height="6" rx=".5"/><rect x="12" y="7" width="3" height="9" rx=".5"/><rect x="17" y="12" width="3" height="4" rx=".5"/></svg>
-          <span>گزارش و تحلیل</span>
+        <button class="nav-item" data-view="analytics" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 19V5M4 19h16"/><rect x="7" y="10" width="3" height="6" rx=".5"/><rect x="12" y="7" width="3" height="9" rx=".5"/><rect x="17" y="12" width="3" height="4" rx=".5"/></svg>
+          <span>گزارش پروژه</span>
         </button>
-        <button class="nav-item" data-view="backup">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+        <button class="nav-item" data-view="backup" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
           <span>پشتیبان‌گیری</span>
         </button>
       </nav>
 
       <div class="sidebar-footer">
         <div class="sidebar-stats" id="sidebarStats">
-          <div class="mini-stat"><span>ساعات این ماه</span><strong id="statLogged">0</strong></div>
-          <div class="mini-stat"><span>پروژه فعال</span><strong id="statProjects">0</strong></div>
+          <div class="mini-stat"><span>ساعات این ماه</span><strong id="statLogged">۰</strong></div>
+          <div class="mini-stat"><span>پروژه فعال</span><strong id="statProjects">۰</strong></div>
         </div>
       </div>
     </aside>
 
     <!-- Main -->
     <div class="main">
-      <header class="topbar">
-        <button class="icon-btn menu-btn" id="menuBtn" aria-label="باز کردن منو">
+      <header class="topbar no-print">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="باز کردن منو" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
         <div class="topbar-title">
           <h1 id="viewTitle">ماتریس زمانی</h1>
           <p id="viewSubtitle">انتخاب بازهٔ ساعتی با کشیدن ماوس</p>
         </div>
-        <div class="topbar-actions" id="topbarActions">
-          <!-- filled per view -->
-        </div>
+        <div class="topbar-actions" id="topbarActions"></div>
       </header>
 
       <main class="content">
         <!-- MATRIX VIEW -->
-        <section class="view active" id="view-matrix">
+        <section class="view active no-print" id="view-matrix">
           <div class="matrix-toolbar">
+            <div class="matrix-project-bar">
+              <label for="matrixProjectSelect">ماتریس پروژه</label>
+              <select id="matrixProjectSelect" class="select matrix-project-select" aria-label="انتخاب پروژه برای ماتریس">
+                <option value="">— ابتدا پروژه را انتخاب کنید —</option>
+              </select>
+            </div>
             <div class="jalali-nav">
               <button type="button" class="icon-btn jalali-nav-btn" id="prevMonthBtn" aria-label="ماه قبل" title="ماه قبل">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
               </button>
               <div class="jalali-selects">
                 <select id="jalaliMonthSelect" class="select" aria-label="ماه"></select>
                 <select id="jalaliYearSelect" class="select" aria-label="سال"></select>
               </div>
               <button type="button" class="icon-btn jalali-nav-btn" id="nextMonthBtn" aria-label="ماه بعد" title="ماه بعد">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
               </button>
               <button type="button" class="btn btn-ghost btn-today" id="btnTodayMonth">ماه جاری</button>
             </div>
@@ -90,17 +94,18 @@
             </div>
           </div>
 
+          <div class="matrix-empty-project" id="matrixEmptyProject" hidden>
+            <strong>پروژه‌ای برای ماتریس انتخاب نشده</strong>
+            <p>هر پروژه ماتریس جداگانه‌ای دارد. ابتدا پروژه را از فهرست بالا انتخاب کنید، سپس ساعات را ثبت کنید.</p>
+          </div>
+
           <div class="matrix-wrap" id="matrixWrap">
             <div class="matrix-scroll" id="matrixScroll">
               <table class="matrix" id="matrixTable">
                 <thead>
-                  <tr id="matrixHeadRow">
-                    <!-- hours injected -->
-                  </tr>
+                  <tr id="matrixHeadRow"></tr>
                 </thead>
-                <tbody id="matrixBody">
-                  <!-- days injected -->
-                </tbody>
+                <tbody id="matrixBody"></tbody>
               </table>
             </div>
           </div>
@@ -109,10 +114,10 @@
         </section>
 
         <!-- PROJECTS VIEW -->
-        <section class="view" id="view-projects">
+        <section class="view no-print" id="view-projects">
           <div class="toolbar">
             <button type="button" class="btn btn-primary" id="btnNewProject">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
               پروژه جدید
             </button>
             <div class="filter-tabs" id="projectFilterTabs">
@@ -124,52 +129,128 @@
           <div class="projects-grid" id="projectsGrid"></div>
         </section>
 
-        <!-- ANALYTICS VIEW -->
+        <!-- ANALYTICS / PER-PROJECT REPORT HUB -->
         <section class="view" id="view-analytics">
-          <div class="kpi-row" id="kpiRow"></div>
-          <div class="analytics-grid">
-            <div class="panel">
-              <div class="panel-head">
-                <h2>پیشرفت پروژه‌ها</h2>
-                <p>مقایسه سهم هدف با ساعات واقعی</p>
-              </div>
-              <div class="progress-list" id="progressList"></div>
+          <!-- Project selector (screen only) -->
+          <div class="report-selector no-print" id="reportSelector">
+            <div class="report-selector-copy">
+              <label for="reportProjectSelect">انتخاب پروژه جهت مشاهده گزارش و دریافت خروجی</label>
+              <p>گزارش‌ها کاملاً تفکیک‌شده‌اند؛ هر بار فقط یک پروژه نمایش داده می‌شود.</p>
             </div>
-            <div class="panel panel-wide">
-              <div class="panel-head row">
-                <div>
-                  <h2>جدول نظرات</h2>
-                  <p>فیلتر بر اساس پروژه</p>
-                </div>
-                <select id="commentProjectFilter" class="select">
-                  <option value="">همه پروژه‌ها</option>
-                </select>
+            <select id="reportProjectSelect" class="select report-select" aria-label="انتخاب پروژه">
+              <option value="">— انتخاب پروژه —</option>
+            </select>
+          </div>
+
+          <!-- Empty state -->
+          <div class="report-empty no-print" id="reportEmpty">
+            <div class="report-empty-card">
+              <strong>پروژه‌ای انتخاب نشده</strong>
+              <p>برای مشاهده KPI، نمودار، جدول ریز کارکرد و خروجی اکسل/PDF، یک پروژه را از فهرست بالا انتخاب کنید.</p>
+            </div>
+          </div>
+
+          <!-- Report body (single project) -->
+          <div class="report-hub" id="reportHub" hidden>
+            <!-- Formal print header -->
+            <header class="print-doc-header" id="printDocHeader">
+              <div class="print-brand">
+                <strong>iTask</strong>
+                <span>گزارش رسمی کارکرد پروژه</span>
               </div>
-              <div class="table-wrap">
-                <table class="data-table" id="commentsTable">
+              <div class="print-meta" id="printDocMeta"></div>
+            </header>
+
+            <!-- KPI badges -->
+            <div class="kpi-row" id="kpiRow"></div>
+
+            <!-- Chart -->
+            <div class="panel chart-panel" id="chartPanel">
+              <div class="panel-head no-print">
+                <div>
+                  <h2>روند روزانه ساعات</h2>
+                  <p id="chartSubtitle">ساعات کارکرد این پروژه در روزهای ماه</p>
+                </div>
+              </div>
+              <div class="chart-wrap">
+                <canvas id="projectChart" height="120" aria-label="نمودار ساعات پروژه"></canvas>
+              </div>
+              <img id="chartPrintImage" class="chart-print-image" alt="نمودار ساعات پروژه" hidden />
+            </div>
+
+            <!-- On-screen matrix snapshot for selected report project -->
+            <div class="panel no-print" id="reportMatrixPanel">
+              <div class="panel-head">
+                <div>
+                  <h2>ماتریس زمانی این پروژه</h2>
+                  <p>فقط ساعات ثبت‌شده روی همین پروژه</p>
+                </div>
+              </div>
+              <div class="report-matrix-wrap" id="reportMatrixWrap"></div>
+            </div>
+
+            <!-- Detailed breakdown table -->
+            <div class="panel panel-table" id="detailPanel">
+              <div class="panel-head no-print">
+                <div>
+                  <h2>ریز کارکرد و شرح اقدامات</h2>
+                  <p>بازه زمانی، موضوع، مدت و توضیحات تفصیلی</p>
+                </div>
+              </div>
+              <div class="table-wrap report-table-wrap">
+                <table class="data-table report-table" id="reportDetailTable">
                   <thead>
                     <tr>
-                      <th>روز</th>
-                      <th>ساعت</th>
-                      <th>پروژه</th>
-                      <th>نظر</th>
+                      <th>تاریخ / روز ماه</th>
+                      <th>بازه زمانی دقیق</th>
+                      <th>عنوان تسک / موضوع کار</th>
+                      <th>مدت زمان کارکرد</th>
+                      <th>شرح اقدامات و توضیحات تفصیلی</th>
                       <th>وضعیت</th>
+                      <th class="no-print">عملیات</th>
                     </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody id="reportDetailBody"></tbody>
+                  <tfoot id="reportDetailFoot"></tfoot>
                 </table>
               </div>
             </div>
-          </div>
-          <div class="toolbar export-bar">
-            <button type="button" class="btn btn-primary" id="btnExportMonth">خروجی اکسل ماه</button>
-            <button type="button" class="btn btn-secondary" id="btnExportProject">خروجی اکسل پروژه</button>
-            <select id="exportProjectSelect" class="select"></select>
+
+            <!-- Export actions -->
+            <div class="toolbar export-bar no-print">
+              <button type="button" class="btn btn-primary" id="btnExportProjectExcel">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h10l6 6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg>
+                استخراج فایل اکسل پروژه
+              </button>
+              <button type="button" class="btn btn-secondary" id="btnExportPdf">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>
+                دریافت نسخه رسمی PDF / چاپ
+              </button>
+            </div>
+
+            <!-- Formal print footer -->
+            <footer class="print-doc-footer" id="printDocFooter">
+              <div class="print-footer-grid">
+                <div>
+                  <span class="print-label">زمان تولید گزارش</span>
+                  <strong id="printTimestamp">—</strong>
+                </div>
+                <div>
+                  <span class="print-label">محرمانگی</span>
+                  <strong>محرمانه — صرفاً جهت بررسی مدیریتی و مکاتبات اداری</strong>
+                </div>
+                <div class="print-sign">
+                  <span class="print-label">تأیید مدیر / مسئول پروژه</span>
+                  <div class="sign-line"></div>
+                </div>
+              </div>
+              <div class="print-page-num" aria-hidden="true">صفحه <span class="page-counter"></span> — نسخه رسمی برای مکاتبات اداری</div>
+            </footer>
           </div>
         </section>
 
         <!-- BACKUP VIEW -->
-        <section class="view" id="view-backup">
+        <section class="view no-print" id="view-backup">
           <div class="backup-cards">
             <div class="panel">
               <div class="panel-head">
@@ -205,7 +286,7 @@
   </div>
 
   <!-- Task Modal -->
-  <dialog class="modal" id="taskModal">
+  <dialog class="modal no-print" id="taskModal">
     <form method="dialog" class="modal-card modal-card-lg" id="taskForm">
       <header class="modal-head">
         <div>
@@ -213,7 +294,7 @@
           <p class="modal-sub" id="taskModalSub">انتخاب پروژه و بازه ساعت</p>
         </div>
         <button type="button" class="icon-btn" id="taskModalClose" aria-label="بستن">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </header>
 
@@ -256,29 +337,46 @@
               <select id="endHour" class="select"></select>
             </div>
           </div>
+          <div class="field">
+            <label for="taskDuration">مدت واقعی کارکرد (با گام نیم‌ساعت)</label>
+            <select id="taskDuration" class="select"></select>
+            <p class="field-hint">مثلاً فقط نیم‌ساعت از بازه ۱۱–۱۲، یا ۱٫۵ ساعت برای دو اسلات.</p>
+          </div>
           <div class="time-track" id="timeTrack" aria-hidden="true"></div>
         </section>
 
-        <section class="task-section">
+        <section class="task-section" id="taskProjectSection">
           <div class="task-section-head">
-            <h3>انتخاب پروژه</h3>
-            <input type="search" id="projectSearch" class="project-search" placeholder="جستجوی پروژه یا مشتری…" autocomplete="off" />
+            <h3>پروژه (قفل‌شده روی ماتریس)</h3>
           </div>
-          <div class="project-picker" id="projectPicker"></div>
-          <p class="project-picker-empty" id="projectPickerEmpty" hidden>پروژه فعالی نیست. از منوی پروژه‌ها یکی بسازید.</p>
+          <div class="task-locked-project" id="taskLockedProject">—</div>
+          <input type="search" id="projectSearch" class="project-search" hidden autocomplete="off" />
+          <div class="project-picker" id="projectPicker" hidden></div>
+          <p class="project-picker-empty" id="projectPickerEmpty" hidden></p>
         </section>
 
         <section class="task-section">
           <div class="field">
-            <label for="taskComment">توضیح / نظر</label>
-            <textarea id="taskComment" rows="3" placeholder="چه کاری در این بازه انجام شد؟"></textarea>
+            <label for="taskTopic">عنوان تسک / موضوع کار</label>
+            <input type="text" id="taskTopic" maxlength="120" placeholder="مثلاً طراحی صفحه گزارش، جلسه هماهنگی، پیاده‌سازی API…" />
+          </div>
+          <div class="field">
+            <label for="taskComment">شرح اقدامات و توضیحات تفصیلی</label>
+            <textarea id="taskComment" rows="3" placeholder="چه اقداماتی در این بازه انجام شد؟ جزئیات را بنویسید…"></textarea>
           </div>
           <div class="task-options">
             <label class="check-card">
               <input type="checkbox" id="taskDone" />
               <span class="check-card-ui">
-                <strong>انجام‌شده</strong>
-                <em>این بازه به‌عنوان Done علامت بخورد</em>
+                <strong>انجام‌شده (Done)</strong>
+                <em>این بازه به‌عنوان تکمیل‌شده علامت بخورد</em>
+              </span>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="taskExcludeHours" />
+              <span class="check-card-ui">
+                <strong>جزو ساعت حساب نشود</strong>
+                <em>کار انجام شده ثبت می‌شود، ولی در مجموع ساعات و نمودار شمرده نمی‌شود</em>
               </span>
             </label>
           </div>
@@ -295,12 +393,12 @@
   </dialog>
 
   <!-- Project Modal -->
-  <dialog class="modal" id="projectModal">
+  <dialog class="modal no-print" id="projectModal">
     <form method="dialog" class="modal-card" id="projectForm">
       <header class="modal-head">
         <h2 id="projectModalTitle">پروژه جدید</h2>
         <button type="button" class="icon-btn" id="projectModalClose" aria-label="بستن">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </header>
       <div class="modal-body">
@@ -342,10 +440,13 @@
     </form>
   </dialog>
 
-  <!-- Toast -->
-  <div class="toast-host" id="toastHost" aria-live="polite"></div>
+  <div class="toast-host no-print" id="toastHost" aria-live="polite"></div>
+
+  <!-- Dedicated print/PDF document (built on demand, screen-hidden) -->
+  <div id="printSheet" class="print-sheet" aria-hidden="true"></div>
 
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
