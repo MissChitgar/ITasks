@@ -1726,10 +1726,11 @@ body.is-printing .modal {
 
 body.is-printing .print-sheet {
   display: block;
+  box-sizing: border-box;
   background: #fff;
   color: #0f172a;
   min-height: 100vh;
-  padding: 28px 36px;
+  padding: 36px 40px;
   font-family: "Arad", "Vazirmatn", Tahoma, sans-serif;
   font-feature-settings: "ss01";
   direction: rtl;
@@ -1923,7 +1924,7 @@ body.is-printing .ps-empty {
 @media print {
   @page {
     size: A4 landscape;
-    margin: 12mm 14mm;
+    margin: 16mm 14mm;
   }
 
   html,
@@ -1933,8 +1934,10 @@ body.is-printing .ps-empty {
     font-family: "Arad", "Vazirmatn", Tahoma, sans-serif !important;
     font-feature-settings: "ss01";
     font-size: 10.5pt;
-    line-height: 1.5;
+    line-height: 1.55;
     direction: rtl;
+    margin: 0 !important;
+    padding: 0 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -1949,24 +1952,30 @@ body.is-printing .ps-empty {
 
   .print-sheet {
     display: block !important;
+    box-sizing: border-box !important;
     width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    max-width: 100% !important;
+    padding: 14mm 12mm !important;
+    margin: 0 auto !important;
     background: #fff !important;
     color: #0f172a !important;
   }
 
   .ps-doc {
+    box-sizing: border-box;
     width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
   }
 
   .ps-head {
     display: grid !important;
     grid-template-columns: 1.1fr 1.4fr 1.1fr;
-    gap: 16px;
+    gap: 18px;
     align-items: center;
-    padding: 0 0 12px;
-    margin-bottom: 16px;
+    padding: 4px 2px 14px !important;
+    margin: 0 0 18px !important;
     border-bottom: 2.5px solid #0f172a;
   }
 
@@ -2010,7 +2019,8 @@ body.is-printing .ps-empty {
   }
 
   .ps-block {
-    margin-bottom: 16px;
+    margin: 0 0 18px !important;
+    padding: 0 !important;
   }
 
   .ps-block-matrix {
@@ -2022,22 +2032,24 @@ body.is-printing .ps-empty {
   }
 
   .ps-h2 {
-    margin: 0 0 8px;
+    margin: 0 0 10px !important;
     font-size: 11pt;
     font-weight: 700;
     color: #0f172a;
-    padding-bottom: 5px;
+    padding: 0 0 6px !important;
     border-bottom: 1px solid #94a3b8;
   }
 
   .ps-chart {
     display: block;
+    box-sizing: border-box;
     width: 100%;
-    max-height: 190px;
+    max-height: 180px;
     height: auto;
     object-fit: contain;
     border: 1px solid #94a3b8;
-    padding: 6px;
+    padding: 10px !important;
+    margin: 0 !important;
     background: #fff;
   }
 
@@ -2102,7 +2114,7 @@ body.is-printing .ps-empty {
   .ps-table th,
   .ps-table td {
     border: 1px solid #64748b;
-    padding: 6px 8px;
+    padding: 8px 10px !important;
     text-align: right;
     vertical-align: top;
     color: #0f172a;
@@ -2134,6 +2146,7 @@ body.is-printing .ps-empty {
     font-weight: 700;
     font-size: 10.5pt;
     border-top: 2px solid #0f172a;
+    padding: 10px !important;
   }
 
   .ps-num {

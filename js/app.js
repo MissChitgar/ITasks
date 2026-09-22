@@ -2097,6 +2097,15 @@
     $("#btnExportProjectExcel").addEventListener("click", exportProjectExcel);
     $("#btnExportPdf").addEventListener("click", exportFormalPdf);
 
+    // Ctrl/Cmd+P on report view → formal PDF sheet (not the dark app UI)
+    window.addEventListener("keydown", (e) => {
+      const isPrint = (e.ctrlKey || e.metaKey) && (e.key === "p" || e.key === "P");
+      if (!isPrint) return;
+      if (currentView !== "analytics" || !getSelectedReportProject()) return;
+      e.preventDefault();
+      exportFormalPdf();
+    });
+
     // Backup
     $("#btnBackup").addEventListener("click", backupJson);
     $("#restoreFile").addEventListener("change", (e) => {
