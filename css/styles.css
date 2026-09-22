@@ -1727,20 +1727,27 @@ body.is-printing .modal {
 body.is-printing .print-sheet {
   display: block;
   box-sizing: border-box;
-  background: #fff;
+  background: #f1f5f9;
   color: #0f172a;
   min-height: 100vh;
-  padding: 36px 40px;
+  padding: 24px;
   font-family: "Arad", "Vazirmatn", Tahoma, sans-serif;
   font-feature-settings: "ss01";
   direction: rtl;
 }
 
-/* ---- Formal Persian document (screen preview) ---- */
 body.is-printing .ps-doc {
-  max-width: 1100px;
-  margin: 0 auto;
   color: #0f172a;
+}
+
+body.is-printing .ps-page {
+  box-sizing: border-box;
+  background: #fff;
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 36px 40px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
 body.is-printing .ps-head {
@@ -1748,8 +1755,8 @@ body.is-printing .ps-head {
   grid-template-columns: 1.1fr 1.4fr 1.1fr;
   gap: 20px;
   align-items: center;
-  padding: 4px 4px 16px;
-  margin-bottom: 20px;
+  padding: 0 0 16px;
+  margin: 0 0 20px;
   border-bottom: 2.5px solid #0f172a;
 }
 
@@ -1757,25 +1764,20 @@ body.is-printing .ps-name {
   font-size: 18px;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.3;
 }
 
 body.is-printing .ps-name-en {
   margin-top: 2px;
   font-size: 11px;
   color: #64748b;
-  letter-spacing: 0.02em;
 }
 
-body.is-printing .ps-head-center {
-  text-align: center;
-}
+body.is-printing .ps-head-center { text-align: center; }
 
 body.is-printing .ps-project {
   font-size: 20px;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.35;
 }
 
 body.is-printing .ps-month {
@@ -1784,9 +1786,7 @@ body.is-printing .ps-month {
   color: #475569;
 }
 
-body.is-printing .ps-head-left {
-  text-align: left;
-}
+body.is-printing .ps-head-left { text-align: left; }
 
 body.is-printing .ps-date-label {
   font-size: 11px;
@@ -1800,32 +1800,31 @@ body.is-printing .ps-date {
   color: #0f172a;
 }
 
-body.is-printing .ps-block {
-  margin-bottom: 22px;
-}
-
 body.is-printing .ps-h2 {
-  margin: 0 0 10px;
-  font-size: 14px;
+  margin: 0 0 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #0f172a;
-  padding: 0 0 6px;
+  padding: 0 0 8px;
   border-bottom: 1px solid #cbd5e1;
+}
+
+body.is-printing .ps-chart-frame {
+  border: 1px solid #cbd5e1;
+  padding: 16px;
+  background: #fff;
 }
 
 body.is-printing .ps-chart {
   display: block;
   width: 100%;
-  max-height: 220px;
+  max-height: 320px;
   height: auto;
   object-fit: contain;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  padding: 8px;
 }
 
 body.is-printing .ps-matrix-wrap {
-  overflow: visible;
+  overflow: auto;
   border: 1px solid #64748b;
 }
 
@@ -1898,13 +1897,6 @@ body.is-printing .ps-table th {
   font-size: 11px;
 }
 
-body.is-printing .ps-table tfoot .ps-total td {
-  background: #f1f5f9;
-  font-weight: 700;
-  font-size: 13px;
-  border-top: 2px solid #0f172a;
-}
-
 body.is-printing .ps-num {
   white-space: nowrap;
   font-feature-settings: "ss01", "tnum";
@@ -1921,10 +1913,43 @@ body.is-printing .ps-empty {
   padding: 14px;
 }
 
+body.is-printing .ps-hours-banner {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border: 2px solid #0f172a;
+  background: #f8fafc;
+  text-align: center;
+}
+
+body.is-printing .ps-hours-label {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+body.is-printing .ps-hours-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+body.is-printing .ps-hours-value span {
+  font-size: 16px;
+  font-weight: 600;
+  margin-inline-start: 4px;
+}
+
+body.is-printing .ps-hours-note {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #92400e;
+}
+
 @media print {
   @page {
     size: A4 landscape;
-    margin: 16mm 14mm;
+    margin: 0;
   }
 
   html,
@@ -1952,35 +1977,57 @@ body.is-printing .ps-empty {
 
   .print-sheet {
     display: block !important;
-    box-sizing: border-box !important;
     width: 100% !important;
-    max-width: 100% !important;
-    padding: 14mm 12mm !important;
-    margin: 0 auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
     background: #fff !important;
     color: #0f172a !important;
   }
 
   .ps-doc {
-    box-sizing: border-box;
     width: 100%;
-    max-width: 100%;
-    padding: 0;
     margin: 0;
+    padding: 0;
+  }
+
+  /* هر بخش = یک صفحه با حاشیه یکسان از کناره‌ها */
+  .ps-page {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 16mm 15mm !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .ps-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .ps-page-chart,
+  .ps-page-table {
+    page-break-before: always;
+    break-before: page;
   }
 
   .ps-head {
     display: grid !important;
     grid-template-columns: 1.1fr 1.4fr 1.1fr;
-    gap: 18px;
+    gap: 16px;
     align-items: center;
-    padding: 4px 2px 14px !important;
-    margin: 0 0 18px !important;
+    padding: 0 0 12px !important;
+    margin: 0 0 16px !important;
     border-bottom: 2.5px solid #0f172a;
   }
 
   .ps-name {
-    font-size: 14pt;
+    font-size: 13pt;
     font-weight: 700;
     color: #0f172a;
   }
@@ -1994,7 +2041,7 @@ body.is-printing .ps-empty {
   .ps-head-center { text-align: center; }
 
   .ps-project {
-    font-size: 15pt;
+    font-size: 14pt;
     font-weight: 700;
     color: #0f172a;
   }
@@ -2010,47 +2057,41 @@ body.is-printing .ps-empty {
   .ps-date-label {
     font-size: 8pt;
     color: #64748b;
+    margin-bottom: 2px;
   }
 
   .ps-date {
-    font-size: 11pt;
+    font-size: 10.5pt;
     font-weight: 700;
     color: #0f172a;
   }
 
-  .ps-block {
-    margin: 0 0 18px !important;
-    padding: 0 !important;
-  }
-
-  .ps-block-matrix {
-    break-inside: avoid;
-  }
-
-  .ps-block-chart {
-    break-inside: avoid;
-  }
-
   .ps-h2 {
-    margin: 0 0 10px !important;
-    font-size: 11pt;
+    margin: 0 0 12px !important;
+    font-size: 12pt;
     font-weight: 700;
     color: #0f172a;
     padding: 0 0 6px !important;
     border-bottom: 1px solid #94a3b8;
   }
 
+  .ps-chart-frame {
+    box-sizing: border-box;
+    border: 1px solid #94a3b8;
+    padding: 14px !important;
+    background: #fff;
+    break-inside: avoid;
+  }
+
   .ps-chart {
     display: block;
-    box-sizing: border-box;
     width: 100%;
-    max-height: 180px;
+    max-height: 420px;
     height: auto;
     object-fit: contain;
-    border: 1px solid #94a3b8;
-    padding: 10px !important;
-    margin: 0 !important;
-    background: #fff;
+    margin: 0;
+    padding: 0;
+    border: none;
   }
 
   .ps-matrix-wrap {
@@ -2111,6 +2152,14 @@ body.is-printing .ps-empty {
     font-size: 9pt;
   }
 
+  .ps-table thead {
+    display: table-header-group;
+  }
+
+  .ps-table tfoot {
+    display: table-footer-group;
+  }
+
   .ps-table th,
   .ps-table td {
     border: 1px solid #64748b;
@@ -2141,14 +2190,6 @@ body.is-printing .ps-empty {
     break-inside: avoid;
   }
 
-  .ps-table tfoot .ps-total td {
-    background: #f1f5f9 !important;
-    font-weight: 700;
-    font-size: 10.5pt;
-    border-top: 2px solid #0f172a;
-    padding: 10px !important;
-  }
-
   .ps-num {
     white-space: nowrap;
     font-feature-settings: "ss01", "tnum";
@@ -2162,7 +2203,40 @@ body.is-printing .ps-empty {
   .ps-empty {
     text-align: center;
     color: #64748b;
-    padding: 14px !important;
+    padding: 16px !important;
+  }
+
+  .ps-hours-banner {
+    margin-top: 18px !important;
+    padding: 14px 18px !important;
+    border: 2px solid #0f172a;
+    background: #f8fafc !important;
+    text-align: center;
+    break-inside: avoid;
+  }
+
+  .ps-hours-label {
+    font-size: 9pt;
+    color: #64748b;
+    margin-bottom: 4px;
+  }
+
+  .ps-hours-value {
+    font-size: 22pt;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .ps-hours-value span {
+    font-size: 12pt;
+    font-weight: 600;
+    margin-inline-start: 4px;
+  }
+
+  .ps-hours-note {
+    margin-top: 6px;
+    font-size: 9pt;
+    color: #92400e;
   }
 }
 

@@ -1644,10 +1644,10 @@
       }
 
       const hold = document.createElement("div");
-      hold.style.cssText = "position:fixed;left:-9999px;top:0;width:920px;height:280px;background:#fff;";
+      hold.style.cssText = "position:fixed;left:-9999px;top:0;width:1100px;height:420px;background:#fff;";
       const canvas = document.createElement("canvas");
-      canvas.width = 920;
-      canvas.height = 280;
+      canvas.width = 1100;
+      canvas.height = 420;
       hold.appendChild(canvas);
       document.body.appendChild(hold);
 
@@ -1737,6 +1737,25 @@
     });
   }
 
+  function buildPrintHeaderHtml(reportTitle, monthLabel, dateFa) {
+    return `
+      <header class="ps-head">
+        <div class="ps-head-right">
+          <div class="ps-name">${escapeHtml(AUTHOR_NAME)}</div>
+          <div class="ps-name-en">${escapeHtml(AUTHOR_NAME_EN)}</div>
+        </div>
+        <div class="ps-head-center">
+          <div class="ps-project">${escapeHtml(reportTitle)}</div>
+          <div class="ps-month">ماه گزارش: ${monthLabel}</div>
+        </div>
+        <div class="ps-head-left">
+          <div class="ps-date-label">تاریخ خروجی</div>
+          <div class="ps-date">${dateFa}</div>
+        </div>
+      </header>
+    `;
+  }
+
   function buildPrintSheetHtml(project, ranges, daily, chartDataUrl) {
     const ym = monthKey();
     const { jm } = parseMonthKey(ym);
@@ -1749,6 +1768,7 @@
 
     const today = todayJalali();
     const dateFa = `${toPersianDigits(today.jd)} ${JALALI_MONTHS[today.jm - 1]} ${toPersianDigits(today.jy)}`;
+    const header = buildPrintHeaderHtml(reportTitle, monthLabel, dateFa);
 
     const tableRows = ranges.length
       ? ranges
@@ -1771,7 +1791,7 @@
       : `<tr><td class="ps-empty" colspan="6">برای این پروژه در ماه جاری بازه‌ای ثبت نشده است.</td></tr>`;
 
     const chartBlock = chartDataUrl
-      ? `<img class="ps-chart" src="${chartDataUrl}" alt="نمودار ساعات روزانه" />`
+      ? `<img class="ps-chart" src="${chartDataUrl}" alt="نمودار عملکرد" />`
       : `<p class="ps-empty">نمودار در دسترس نیست.</p>`;
 
     const matrixHtml = buildProjectMatrixHtml(project.id, { forPrint: true });
@@ -1779,33 +1799,24 @@
 
     return `
       <article class="ps-doc" dir="rtl" lang="fa">
-        <header class="ps-head">
-          <div class="ps-head-right">
-            <div class="ps-name">${escapeHtml(AUTHOR_NAME)}</div>
-            <div class="ps-name-en">${escapeHtml(AUTHOR_NAME_EN)}</div>
-          </div>
-          <div class="ps-head-center">
-            <div class="ps-project">${escapeHtml(reportTitle)}</div>
-            <div class="ps-month">ماه گزارش: ${monthLabel}</div>
-          </div>
-          <div class="ps-head-left">
-            <div class="ps-date-label">تاریخ خروجی</div>
-            <div class="ps-date">${dateFa}</div>
-          </div>
-        </header>
-
-        <section class="ps-block ps-block-matrix">
-          <h2 class="ps-h2">ماتریس ساعات ثبت‌شده</h2>
+        <!-- صفحه ۱: ماتریس ساعت -->
+        <section class="ps-page ps-page-matrix">
+          ${header}
+          <h2 class="ps-h2">ماتریس ساعت</h2>
           <div class="ps-matrix-wrap">${matrixHtml}</div>
         </section>
 
-        <section class="ps-block ps-block-chart">
-          <h2 class="ps-h2">نمودار ساعات روزانه</h2>
-          ${chartBlock}
+        <!-- صفحه ۲: نمودار عملکرد -->
+        <section class="ps-page ps-page-chart">
+          ${header}
+          <h2 class="ps-h2">نمودار عملکرد</h2>
+          <div class="ps-chart-frame">${chartBlock}</div>
         </section>
 
-        <section class="ps-block ps-block-table">
-          <h2 class="ps-h2">جدول ریز کارکرد</h2>
+        <!-- صفحه ۳+: جدول زمانبندی -->
+        <section class="ps-page ps-page-table">
+          ${header}
+          <h2 class="ps-h2">جدول زمانبندی</h2>
           <table class="ps-table">
             <thead>
               <tr>
@@ -1818,14 +1829,12 @@
               </tr>
             </thead>
             <tbody>${tableRows}</tbody>
-            <tfoot>
-              <tr class="ps-total">
-                <td colspan="3">مجموع ساعات شمارش‌شده</td>
-                <td class="ps-num">${countedLabel} ساعت</td>
-                <td colspan="2">${excludedHours ? `مستثنی از شمارش: ${formatDurationFa(excludedHours)}` : ""}</td>
-              </tr>
-            </tfoot>
           </table>
+          <div class="ps-hours-banner">
+            <div class="ps-hours-label">مجموع ساعات کار شده</div>
+            <div class="ps-hours-value">${countedLabel} <span>ساعت</span></div>
+            ${excludedHours ? `<div class="ps-hours-note">مستثنی از شمارش: ${formatDurationFa(excludedHours)}</div>` : ""}
+          </div>
         </section>
       </article>
     `;
